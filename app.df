@@ -1,0 +1,10 @@
+FROM        maven:3.5 as builder
+WORKDIR     /interrogate
+COPY        pom.xml /interrogate/
+COPY        src /interrogate/src
+RUN         mvn clean install
+
+FROM        java:8
+COPY        --from=builder /interrogate/target/interrogate.jar /interrogate/
+WORKDIR     /interrogate
+CMD         ["java", "-Dconfiguration_env=container", "-jar", "interrogate.jar"]

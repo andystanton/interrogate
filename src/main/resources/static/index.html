@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interrogate App</title>
+    <script type="text/javascript" src="/webjars/vue/2.4.2/vue.min.js"></script>
+    <script type="text/javascript" src="/webjars/vue-resource/1.3.4/dist/vue-resource.min.js"></script>
+    <style>
+        .container {
+            display: -webkit-flex;
+            display: flex;
+            width: 100%;
+        }
+        .users {
+            width: 500px;
+        }
+        .details {
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div>
+        <h1 v-on:click="setMode(null)">Interrogate App</h1>
+        <hr/>
+    </div>
+    <div class="container">
+        <div class="users">
+            <h2>Users</h2>
+            <ul>
+                <li v-for="user in users" v-on:click="selectUser(user.id, $event)">
+                    {{ user.name }}
+                </li>
+            </ul>
+            <button v-on:click="setMode('add', $event)">Add user</button>
+        </div>
+        <div class="details">
+            <h2 v-if="mode == 'edit'">Edit user</h2>
+            <h2 v-if="mode == 'add'">Add user</h2>
+            <div v-if="mode != null">
+                Name: <input id="user-name" v-model="selectedUser.name"/><br/>
+                Email: <input id="user-email" v-model="selectedUser.email"/><br/><br/>
+                <button v-on:click="saveUser($event)">Save</button>
+                <button v-if="mode == 'edit'" v-on:click="deleteUser($event)">Delete</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="app.js"></script>
+</html>
